@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { dynamic } from '@/lib/dynamic'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
