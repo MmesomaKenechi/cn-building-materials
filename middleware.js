@@ -30,3 +30,6 @@ export default withAuth(
 export const config = {
   matcher: ['/admin/:path*']
 }
+
+// This forces all admin routes to be dynamic (not static)
+export const dynamic = 'force-dynamic'
