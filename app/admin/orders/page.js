@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
+import { dynamic } from '@/lib/dynamic'
 
 export default function AdminOrders() {
   const { data: session, status } = useSession()
@@ -80,7 +81,6 @@ export default function AdminOrders() {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Header */}
       <header className="bg-[#1a3c6e] text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Orders</h1>
@@ -164,7 +164,6 @@ export default function AdminOrders() {
           </div>
         </div>
 
-        {/* Summary Stats */}
         {orders.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             <div className="bg-white p-4 rounded-xl shadow text-center">
