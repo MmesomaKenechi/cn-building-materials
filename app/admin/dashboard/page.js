@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
+import { dynamic } from '@/lib/dynamic'
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession()
@@ -29,31 +30,26 @@ export default function AdminDashboard() {
   }, [session, status])
 
   const fetchDashboardData = async () => {
-    // Get product count
     const { count: productCount } = await supabase
       .from('products')
       .select('*', { count: 'exact', head: true })
 
-    // Get low stock products (< 10)
     const { count: lowStockCount } = await supabase
       .from('products')
       .select('*', { count: 'exact', head: true })
       .lt('stock', 10)
 
-    // Get orders
     const { data: orders } = await supabase
       .from('orders')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(10)
 
-    // Get pending orders count
     const { count: pendingCount } = await supabase
       .from('orders')
       .select('*', { count: 'exact', head: true })
       .eq('status', 'pending')
 
-    // Calculate revenue from paid orders
     const { data: paidOrders } = await supabase
       .from('orders')
       .select('total')
@@ -80,7 +76,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Header */}
       <header className="bg-[#1a3c6e] text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
@@ -97,7 +92,6 @@ export default function AdminDashboard() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <div className="bg-white p-6 rounded-xl shadow text-center">
             <div className="text-3xl font-bold text-[#1a3c6e]">{stats.products}</div>
@@ -121,7 +115,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Quick Actions */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <a href="/admin/products" className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center">
             <div className="text-4xl mb-2">📦</div>
@@ -140,7 +133,6 @@ export default function AdminDashboard() {
           </a>
         </div>
 
-        {/* Recent Orders */}
         <div className="bg-white rounded-xl shadow p-6">
           <h2 className="text-xl font-bold text-[#1a3c6e] mb-4">Recent Orders</h2>
           {recentOrders.length === 0 ? (
