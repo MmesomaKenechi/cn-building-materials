@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
+import { dynamic } from '@/lib/dynamic'
 
 export default function EditProduct({ params }) {
   const { data: session, status } = useSession()
@@ -33,14 +34,12 @@ export default function EditProduct({ params }) {
   }, [session, status])
 
   const fetchData = async () => {
-    // Fetch categories
     const { data: categoriesData } = await supabase
       .from('categories')
       .select('*')
       .order('name')
     setCategories(categoriesData || [])
 
-    // Fetch product
     const { data: productData } = await supabase
       .from('products')
       .select('*')
@@ -113,7 +112,6 @@ export default function EditProduct({ params }) {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Header */}
       <header className="bg-[#1a3c6e] text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Edit Product</h1>
@@ -124,7 +122,6 @@ export default function EditProduct({ params }) {
       <div className="container mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Product Name */}
             <div>
               <label className="block font-medium text-[#1a3c6e] mb-1">Product Name *</label>
               <input
@@ -137,7 +134,6 @@ export default function EditProduct({ params }) {
               />
             </div>
 
-            {/* Description */}
             <div>
               <label className="block font-medium text-[#1a3c6e] mb-1">Description</label>
               <textarea
@@ -149,7 +145,6 @@ export default function EditProduct({ params }) {
               />
             </div>
 
-            {/* Price & Cost Price */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block font-medium text-[#1a3c6e] mb-1">Selling Price (₦) *</label>
@@ -174,7 +169,6 @@ export default function EditProduct({ params }) {
               </div>
             </div>
 
-            {/* Category & Stock */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block font-medium text-[#1a3c6e] mb-1">Category</label>
@@ -203,7 +197,6 @@ export default function EditProduct({ params }) {
               </div>
             </div>
 
-            {/* SKU */}
             <div>
               <label className="block font-medium text-[#1a3c6e] mb-1">SKU</label>
               <input
@@ -215,7 +208,6 @@ export default function EditProduct({ params }) {
               />
             </div>
 
-            {/* Active Status */}
             <div className="flex items-center gap-3">
               <input
                 type="checkbox"
@@ -227,7 +219,6 @@ export default function EditProduct({ params }) {
               <label className="font-medium text-[#1a3c6e]">Product is active (visible in store)</label>
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={saving}
