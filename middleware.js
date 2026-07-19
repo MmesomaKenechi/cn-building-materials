@@ -16,20 +16,24 @@ export default withAuth(
       return NextResponse.redirect(new URL('/admin/dashboard', req.url))
     }
 
+    // Force admin routes to be dynamic
+    if (isAdminRoute) {
+      const response = NextResponse.next()
+      response.headers.set('x-middleware-cache', 'no-cache')
+      return response
+    }
+
     return NextResponse.next()
   },
   {
     callbacks: {
       authorized: ({ token }) => {
         return true
-      }
-    }
+      },
+    },
   }
 )
 
 export const config = {
-  matcher: ['/admin/:path*']
+  matcher: ['/admin/:path*'],
 }
-
-// This forces all admin routes to be dynamic (not static)
-export const dynamic = 'force-dynamic'
