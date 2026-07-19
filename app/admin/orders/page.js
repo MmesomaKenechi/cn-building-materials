@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
-import { dynamic } from '@/lib/dynamic'
 
 export default function AdminOrders() {
   const { data: session, status } = useSession()
