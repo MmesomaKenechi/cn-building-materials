@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
+import { dynamic } from '@/lib/dynamic'
 
 export default function AdminProducts() {
   const { data: session, status } = useSession()
@@ -57,7 +58,6 @@ export default function AdminProducts() {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Header */}
       <header className="bg-[#1a3c6e] text-white p-4 shadow-lg">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Manage Products</h1>
